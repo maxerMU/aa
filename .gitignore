@@ -1,4 +1,7 @@
 *.exe
+*.aux
+*.toc
+*.log
 *.out
 build*/
 .vscode/

@@ -14,8 +14,8 @@ def plot_graphics(files):
                 x.append(x_val)
                 y.append(y_val)
             ax = plt.gca()
-            ax.set_xlabel("array size")
-            ax.set_ylabel("ticks")
+            ax.set_xlabel("Размер массива")
+            ax.set_ylabel("Тики")
             plt.plot(x, y)
             plt.grid(True)
 

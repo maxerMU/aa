@@ -1,75 +1,86 @@
 #include "time_compare.hpp"
 #include "levenstein.hpp"
-#include "getCPUTime.hpp"
 #include "string_gen.hpp"
-#include <iostream>
+#include <fstream>
 #include <iomanip>
+#include <iostream>
+#include <time.h>
 
 using namespace std;
 
-void time_compare() {
-    double start;
-    double end;
-    cout << setw(37) << "Time in ms" << endl;
-    cout << setw(4) << "Len" << setw(15) << "Matrix" << setw(15) << "Recursion" << setw(15) << "With cache" << setw(15) << "Domerau" << endl;
-    size_t n = 100000;
-    for (size_t j = 5; j < 10; j += 1) {
-        string str1 = string_gen(j), str2 = string_gen(j);
-        cout << setw(4) << j;
-        start = getCPUTime();
-        for (size_t i = 0; i < n; i++) {
-            matr_method(str1, str2);
-        }
-        end = getCPUTime();
-        cout << setw(15) << (end - start) / n;
+double func_time(method_func_t func, size_t str_len, size_t iterations) {
+  string str1 = string_gen(str_len), str2 = string_gen(str_len);
+  clock_t start = clock();
+  for (size_t i = 0; i < iterations; i++) {
+    func(str1, str2);
+  }
+  return ((double)(clock() - start)) / iterations;
+}
 
-        start = getCPUTime();
-        for (size_t i = 0; i < n / 100; i++) {
-            recur_method(str1, str2);
-        }
-        end = getCPUTime();
-        cout << setw(15) << (end - start) / n * 100;
+void write_header() {
+  cout << setw(37) << "Time in ms" << endl;
+  cout << setw(4) << "Len" << setw(15) << "Matrix" << setw(15) << "Recursion"
+       << setw(15) << "With cache" << setw(15) << "Domerau" << endl;
+}
 
-        start = getCPUTime();
-        for (size_t i = 0; i < n; i++) {
-            rec_cache_method(str1, str2);
-        }
-        end = getCPUTime();
-        cout << setw(15) << (end - start) / n;
+void time_compare(bool write_to_std) {
+  ofstream mtr_file;
+  ofstream rec_file;
+  ofstream dom_file;
+  ofstream rec_cache_file;
 
-        start = getCPUTime();
-        for (size_t i = 0; i < n; i++) {
-            Domerau_method(str1, str2);
-        }
-        end = getCPUTime();
-        cout << setw(15) << (end - start) / n << endl;
+  if (write_to_std) {
+    write_header();
+  } else {
+    mtr_file.open("time_itmat.csv");
+    mtr_file << "len,IterativeMatrix" << endl;
+
+    rec_file.open("time_rec.csv");
+    rec_file << "len,Recursive" << endl;
+
+    dom_file.open("time_dl.csv");
+    dom_file << "len,DamerauLevenshtein" << endl;
+
+    rec_cache_file.open("time_recmat.csv");
+    rec_cache_file << "len,RecursiveMatrix" << endl;
+  }
+
+  size_t n = 100000;
+  for (size_t j = 5; j < 10; j += 1) {
+    if (write_to_std) {
+      cout << setw(4) << j;
+      cout << setw(15) << func_time(matr_method, j, n);
+      cout << setw(15) << func_time(recur_method, j, n / 100);
+      cout << setw(15) << func_time(rec_cache_method, j, n);
+      cout << setw(15) << func_time(Domerau_method, j, n);
+      cout << endl;
+    } else {
+      mtr_file << j << "," << func_time(matr_method, j, n) << endl;
+      rec_file << j << "," << func_time(recur_method, j, n / 100) << endl;
+      rec_cache_file << j << "," << func_time(rec_cache_method, j, n) << endl;
+      dom_file << j << "," << func_time(Domerau_method, j, n) << endl;
     }
+  }
 
-    n = 10000;
-    for (size_t j = 10; j < 60; j += 10) {
-        string str1 = string_gen(j), str2 = string_gen(j);
-        cout << setw(4) << j;
-        start = getCPUTime();
-        for (size_t i = 0; i < n; i++) {
-            matr_method(str1, str2);
-        }
-        end = getCPUTime();
-        cout << setw(15) << (end - start) / n;
-
-        cout << setw(15) << "";
-
-        start = getCPUTime();
-        for (size_t i = 0; i < n; i++) {
-            rec_cache_method(str1, str2);
-        }
-        end = getCPUTime();
-        cout << setw(15) << (end - start) / n;
-
-        start = getCPUTime();
-        for (size_t i = 0; i < n; i++) {
-            Domerau_method(str1, str2);
-        }
-        end = getCPUTime();
-        cout << setw(15) << (end - start) / n << endl;
+  n = 100;
+  for (size_t j = 10; j < 60; j += 10) {
+    if (write_to_std) {
+      cout << setw(4) << j;
+      cout << setw(15) << func_time(matr_method, j, n);
+      cout << setw(15) << func_time(rec_cache_method, j, n);
+      cout << setw(15) << func_time(Domerau_method, j, n);
+      cout << endl;
+    } else {
+      mtr_file << j << "," << func_time(matr_method, j, n) << endl;
+      rec_cache_file << j << "," << func_time(rec_cache_method, j, n) << endl;
+      dom_file << j << "," << func_time(Domerau_method, j, n) << endl;
     }
+  }
+
+  if (!write_to_std) {
+    mtr_file.close();
+    rec_file.close();
+    rec_cache_file.close();
+    dom_file.close();
+  }
 }

@@ -1,0 +1,60 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{covid}{misc}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Режим доступа: \url{https://covid-19-tracking.p.rapidapi.com} (дата обращения: 17.12.2021)}
+      \field{title}{API по числу заболевших коронавируом людей [Электронный ресурс]}
+    \endentry
+    \entry{python}{misc}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Режим доступа: \url{https://docs.python.org/3/index.html} (дата обращения: 16.10.2021)}
+      \field{title}{Документация по python [Электронный ресурс]}
+    \endentry
+    \entry{json}{misc}{}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Режим доступа: \url{https://www.json.org/json-en.html} (дата обращения: 16.10.2021)}
+      \field{title}{Документация по json [Электронный ресурс]}
+    \endentry
+    \entry{matplotlib}{misc}{}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Режим доступа: \url{https://matplotlib.org} (дата обращения: 16.10.2021)}
+      \field{title}{Документация по json [Электронный ресурс]}
+    \endentry
+    \entry{intel}{misc}{}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Режим доступа: \url{https://www.intel.ru/content/www/ru/ru/products/sku/80817/intel-core-i54460-processor-6m-cache-up-to-3-40-ghz/specifications.html} (дата обращения: 14.09.2021)}
+      \field{title}{Процессор Intel® Core™ i5-4460 (6 МБ кэш-памяти, до 3,40 ГГц) [Электронный ресурс]}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
